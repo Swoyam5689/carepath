@@ -1,0 +1,5 @@
+{
+  "watch": ["src/"],
+  "ext": "js,mjs",
+  "ignore": ["storage/*", "upgrade frontend 2.0/*", "test/*", "*.json", "scratch/*"]
+}

@@ -1,0 +1,970 @@
+/* ==========================================================================
+   CarePath MediKiosk Extension Styles — Modern Digital Health Redesign
+   Scoped under .medikiosk-* to guarantee zero collision with existing CSS.
+   ========================================================================== */
+
+.medikiosk-container {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+/* Step Progression Header */
+.medikiosk-stepper {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  background: var(--bg-surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.medikiosk-step-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13.5px;
+  font-weight: 600;
+  text-align: left;
+  transition: all var(--duration-fast) var(--ease-spring);
+  cursor: pointer;
+}
+
+.medikiosk-step-item:last-child {
+  border-right: none;
+}
+
+.medikiosk-step-item:hover:not(.active) {
+  background: var(--bg-subtle);
+  color: var(--ink);
+}
+
+.medikiosk-step-item.active {
+  background: linear-gradient(135deg, var(--ai-lavender-soft) 0%, #ffffff 100%);
+  color: var(--ai-violet-dark);
+  font-weight: 700;
+  box-shadow: inset 0 -3px 0 var(--ai-violet);
+}
+
+.medikiosk-step-item.completed {
+  color: var(--ai-violet);
+}
+
+.medikiosk-step-badge {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--bg-subtle);
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 800;
+  flex-shrink: 0;
+  transition: all var(--duration-fast) ease;
+}
+
+.medikiosk-step-item.active .medikiosk-step-badge {
+  background: linear-gradient(135deg, var(--nav-indigo) 0%, var(--ai-violet) 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 8px var(--ai-violet-glow);
+}
+
+.medikiosk-step-item.completed .medikiosk-step-badge {
+  background: var(--ai-violet);
+  color: #ffffff;
+}
+
+/* Red-Flag Emergency Banner */
+.medikiosk-emergency-banner {
+  background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+  color: #ffffff;
+  padding: 20px 24px;
+  border-radius: 20px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  box-shadow: 0 12px 30px rgba(185, 28, 28, 0.28);
+  animation: medikiosk-pulse 4s infinite ease-in-out;
+}
+
+@keyframes medikiosk-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(185, 28, 28, 0.45); }
+  50% { box-shadow: 0 0 0 12px rgba(185, 28, 28, 0); }
+}
+
+.medikiosk-emergency-icon {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.medikiosk-emergency-content h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  letter-spacing: -0.2px;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.medikiosk-emergency-content p {
+  margin: 0;
+  font-size: 13.5px;
+  opacity: 0.95;
+  line-height: 1.5;
+}
+
+.medikiosk-emergency-action {
+  margin-left: auto;
+  background: #ffffff;
+  color: #991b1b;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all var(--duration-fast) ease;
+}
+
+.medikiosk-emergency-action:hover {
+  background: #fef2f2;
+  transform: translateY(-1px);
+}
+
+/* Voice Command & Controls Bar */
+.medikiosk-voice-bar {
+  background: var(--bg-surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.medikiosk-mic-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--nav-indigo) 0%, var(--ai-violet) 100%);
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform var(--duration-fast), background var(--duration-normal);
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px var(--ai-violet-glow);
+}
+
+.medikiosk-mic-btn:hover {
+  transform: scale(1.05);
+}
+
+.medikiosk-mic-btn.listening {
+  background: #dc2626;
+  animation: medikiosk-mic-listening 1.2s infinite ease-in-out;
+}
+
+@keyframes medikiosk-mic-listening {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.45); }
+  50% { box-shadow: 0 0 0 12px rgba(220, 38, 38, 0); }
+}
+
+.medikiosk-voice-transcript {
+  flex: 1;
+  min-width: 0;
+}
+
+.medikiosk-voice-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ai-violet);
+  margin-bottom: 4px;
+}
+
+.medikiosk-voice-text {
+  font-size: 14.5px;
+  color: var(--ink);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.medikiosk-voice-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* AYUSH Mode Banner */
+.medikiosk-ayush-toggle-box {
+  background: #fdfbf5;
+  border: 1px solid #ebdebd;
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.medikiosk-ayush-title {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: #785a1a;
+}
+
+.medikiosk-ayush-title strong {
+  font-size: 14.5px;
+  font-weight: 700;
+  display: block;
+}
+
+.medikiosk-ayush-title span {
+  font-size: 12px;
+  color: #8c7138;
+  display: block;
+}
+
+/* Section Card */
+.medikiosk-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 30px 32px;
+  box-shadow: var(--shadow-sm);
+  animation: calmReveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.medikiosk-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 22px;
+}
+
+.medikiosk-card-head h2 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  color: var(--navy);
+  margin: 0;
+}
+
+.medikiosk-card-head p {
+  color: var(--muted);
+  font-size: 14.5px;
+  margin: 6px 0 0;
+}
+
+/* Large Accessible Touch Chips Grid */
+.medikiosk-chips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.medikiosk-touch-chip {
+  min-height: 68px;
+  background: #ffffff;
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--duration-fast) var(--ease-spring);
+  box-shadow: var(--shadow-xs);
+}
+
+.medikiosk-touch-chip:hover {
+  background: var(--bg-subtle);
+  border-color: var(--line-strong);
+  transform: translateY(-1px);
+}
+
+.medikiosk-touch-chip.selected {
+  background: var(--ai-lavender-soft);
+  border-color: var(--ai-violet);
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.16);
+}
+
+.medikiosk-chip-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--bg-subtle);
+  color: var(--ai-violet);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.medikiosk-touch-chip.selected .medikiosk-chip-icon {
+  background: var(--ai-violet);
+  color: #ffffff;
+}
+
+.medikiosk-chip-labels strong {
+  display: block;
+  font-size: 14px;
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.medikiosk-chip-labels span {
+  display: block;
+  font-size: 11.5px;
+  color: var(--muted-2);
+  margin-top: 2px;
+}
+
+/* Severity Slider / Scale */
+.medikiosk-severity-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.medikiosk-severity-btn {
+  padding: 16px;
+  border-radius: 14px;
+  border: 1.5px solid var(--line);
+  background: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--duration-fast) ease;
+}
+
+.medikiosk-severity-btn:hover {
+  background: var(--bg-subtle);
+  border-color: var(--line-strong);
+}
+
+.medikiosk-severity-btn.active {
+  background: var(--danger-soft);
+  border-color: var(--danger);
+  color: var(--danger);
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.15);
+}
+
+.medikiosk-severity-btn strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.medikiosk-severity-btn span {
+  display: block;
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* Document Intelligence Analysis Cards */
+.medikiosk-doc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.medikiosk-doc-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.medikiosk-doc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.medikiosk-abnormal-badge {
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.medikiosk-abnormal-badge.high {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.medikiosk-abnormal-badge.critical {
+  background: #b91c1c;
+  color: #ffffff;
+}
+
+.medikiosk-abnormal-badge.low {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.medikiosk-abnormal-badge.normal {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.medikiosk-lab-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  margin-top: 12px;
+}
+
+.medikiosk-lab-table th,
+.medikiosk-lab-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+
+.medikiosk-lab-table th {
+  color: var(--muted-2);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+/* Structured Clinical Summary (Physician Ready) */
+.medikiosk-summary-box {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 26px;
+  box-shadow: var(--shadow-sm);
+}
+
+.medikiosk-soap-section {
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.medikiosk-soap-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.medikiosk-soap-section h4 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--navy);
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+}
+
+.medikiosk-soap-content {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+.medikiosk-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--teal-soft);
+  color: var(--teal-primary);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  margin: 3px 6px 3px 0;
+  border: 1px solid #ccfbf1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .medikiosk-stepper {
+    grid-template-columns: 1fr;
+  }
+  .medikiosk-step-item {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+  .medikiosk-doc-grid {
+    grid-template-columns: 1fr;
+  }
+  .medikiosk-severity-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .medikiosk-emergency-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ==========================================================================
+   Section-Wise Guided Questionnaire Navigation System
+   Page-by-Page Architecture for MediKiosk Intake & AYUSH Diagnostics
+   ========================================================================== */
+
+.questionnaire-container {
+  max-width: 920px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: questionnaireFadeSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes questionnaireFadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Questionnaire Header Navigation Card */
+.questionnaire-nav-header {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px 22px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.questionnaire-nav-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.questionnaire-nav-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 7px 14px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+}
+
+.questionnaire-nav-back-btn:hover:not(:disabled) {
+  background: #ffffff;
+  border-color: var(--line-strong);
+  transform: translateX(-2px);
+}
+
+.questionnaire-nav-back-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.questionnaire-nav-title-box {
+  text-align: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.questionnaire-section-tag {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--ai-violet);
+  display: block;
+}
+
+.questionnaire-nav-title-box h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 2px 0 0;
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.questionnaire-step-counter {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted-2);
+  background: var(--bg-subtle);
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+/* Progress Track */
+.questionnaire-progress-track {
+  width: 100%;
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.questionnaire-progress-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--nav-indigo-primary) 0%, var(--ai-violet) 100%);
+  transition: width 0.35s var(--ease-spring);
+}
+
+.questionnaire-progress-fill.ayush {
+  background: linear-gradient(90deg, var(--alert-amber) 0%, var(--health-emerald) 100%);
+}
+
+/* Section Progress Pills */
+.questionnaire-section-pills {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .questionnaire-section-pills {
+    display: none;
+  }
+}
+
+.questionnaire-pill-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted-2);
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.questionnaire-pill-item.active {
+  background: var(--ai-lavender-soft);
+  border-color: var(--ai-lavender-border);
+  color: var(--ai-violet-dark);
+  box-shadow: 0 2px 6px var(--ai-violet-glow);
+}
+
+.questionnaire-pill-item.active.ayush {
+  background: var(--alert-amber-soft);
+  border-color: var(--alert-amber-border);
+  color: var(--alert-amber-dark);
+}
+
+.questionnaire-pill-item.completed {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+.questionnaire-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--muted-2);
+  flex-shrink: 0;
+}
+
+.questionnaire-pill-item.active .questionnaire-pill-dot {
+  background: var(--ai-violet);
+}
+.questionnaire-pill-item.active.ayush .questionnaire-pill-dot {
+  background: var(--alert-amber);
+}
+.questionnaire-pill-item.completed .questionnaire-pill-dot {
+  background: #16a34a;
+}
+
+/* Questionnaire Main Question Card */
+.questionnaire-screen-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 32px 36px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.questionnaire-screen-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3.5px;
+  background: linear-gradient(90deg, var(--nav-indigo-primary) 0%, var(--ai-violet) 100%);
+}
+
+.questionnaire-screen-card.ayush::before {
+  background: linear-gradient(90deg, var(--alert-amber) 0%, var(--health-emerald) 100%);
+}
+
+.questionnaire-question-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.questionnaire-substep-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--ai-lavender-soft);
+  color: var(--ai-violet);
+  border: 1px solid var(--ai-lavender-border);
+}
+
+.questionnaire-substep-badge.ayush {
+  background: var(--alert-amber-soft);
+  color: var(--alert-amber-dark);
+  border-color: var(--alert-amber-border);
+}
+
+.questionnaire-question-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.4px;
+  line-height: 1.35;
+  margin: 8px 0 4px;
+}
+
+.questionnaire-question-subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Option Cards List / Grid */
+.questionnaire-options-stack {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.questionnaire-options-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 680px) {
+  .questionnaire-options-grid-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+.questionnaire-option-card {
+  background: #ffffff;
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-spring);
+  text-align: left;
+}
+
+.questionnaire-option-card:hover {
+  border-color: var(--ai-violet);
+  background: var(--ai-lavender-soft);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.1);
+}
+
+.questionnaire-option-card.ayush:hover {
+  border-color: var(--alert-amber);
+  background: var(--alert-amber-soft);
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.1);
+}
+
+.questionnaire-option-card.selected {
+  border-color: var(--ai-violet);
+  background: #f5f3ff;
+  box-shadow: 0 4px 16px var(--ai-violet-glow);
+}
+
+.questionnaire-option-card.selected.ayush {
+  border-color: var(--alert-amber);
+  background: #fffbeb;
+  box-shadow: 0 4px 16px var(--alert-amber-glow);
+}
+
+.option-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.option-card-title {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.35;
+}
+
+.questionnaire-option-card.selected .option-card-title {
+  color: var(--ai-violet-dark);
+}
+
+.questionnaire-option-card.selected.ayush .option-card-title {
+  color: var(--alert-amber-dark);
+}
+
+.option-card-desc {
+  display: block;
+  font-size: 12px;
+  color: var(--muted-2);
+  margin-top: 3px;
+  line-height: 1.4;
+}
+
+.option-radio-indicator {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--line-strong);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: all var(--duration-fast) ease;
+}
+
+.questionnaire-option-card.selected .option-radio-indicator {
+  border-color: var(--ai-violet);
+  background: var(--ai-violet);
+  color: #ffffff;
+}
+
+.questionnaire-option-card.selected.ayush .option-radio-indicator {
+  border-color: var(--alert-amber);
+  background: var(--alert-amber);
+  color: #ffffff;
+}
+
+/* Questionnaire Footer Navigation */
+.questionnaire-footer-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  margin-top: 10px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.auto-advance-hint {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.auto-advance-hint i {
+  font-style: normal;
+  color: var(--ai-violet);
+  font-weight: 800;
+}
+
+.questionnaire-btn-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--nav-indigo-primary) 0%, var(--ai-violet) 100%);
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px var(--ai-violet-glow);
+  transition: all var(--duration-fast) ease;
+}
+
+.questionnaire-btn-next.ayush {
+  background: linear-gradient(135deg, var(--alert-amber) 0%, var(--alert-amber-dark) 100%);
+  box-shadow: 0 4px 14px var(--alert-amber-glow);
+}
+
+.questionnaire-btn-next:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--ai-violet-glow);
+}
+
+.questionnaire-btn-next:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
